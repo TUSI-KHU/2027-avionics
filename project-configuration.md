@@ -1,4 +1,4 @@
-# GitHub Project 실설정 기준선
+# 관리자용: GitHub 작업판의 실제 설정
 
 Project: [2027 Avionics](https://github.com/orgs/TUSI-KHU/projects/1)
 

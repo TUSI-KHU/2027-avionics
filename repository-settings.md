@@ -1,4 +1,4 @@
-# 저장소 실설정과 제한 사항
+# 관리자용: 저장소의 실제 설정과 제한 사항
 
 Repository: [TUSI-KHU/2027-avionics](https://github.com/TUSI-KHU/2027-avionics)
 

@@ -1,48 +1,215 @@
-# 협업 흐름
+# 처음 참여하는 사람을 위한 작업 방법
 
-이 저장소의 Task 단위는 GitHub Issue이며 상태와 우선순위의 기준은 [2027 Avionics Project](https://github.com/orgs/TUSI-KHU/projects/1)의 **실제 설정**이다. 문서와 Project가 다르면 Project를 먼저 따르고 같은 PR에서 문서를 갱신한다.
+처음에는 아래 순서만 기억하면 됩니다.
 
-## 1. Task 시작
+```text
+작업 카드 만들기 → 내 작업으로 옮기기 → 작업 가지 만들기 → 검토 요청 올리기 → 확인 후 합치기
+```
 
-1. Issue form으로 Task를 만들거나 Project의 Draft Item을 repository Issue로 전환한다.
-2. Project에서 `Priority`, `유형`, `Subsystem`, `Gate`를 지정한다.
-3. 착수 전에 Accountable owner 한 명, 완료 조건과 검증 방법을 확인한다.
-4. 주요 `In Progress` Task는 팀원별 하나만 유지한다.
-5. 준비가 끝나면 Status를 `Backlog`에서 `In Progress`로 옮긴다.
+막히면 혼자 오래 붙잡고 있지 말고 작업 카드에 상황을 적어 주세요.
 
-## 2. Branch와 commit
+## 자주 쓰는 말
 
-- 최신 `main`에서 작업 branch를 만든다.
-- 이름은 `<type>/<issue-number>-<short-description>` 형식을 사용한다.
-- type 예: `feat`, `fix`, `docs`, `test`, `chore`.
-- commit은 한 가지 논리 변경을 담고 Conventional Commit 형식을 권장한다.
+| 이 문서에서 쓰는 말 | GitHub에서 보이는 이름 | 뜻 |
+|---|---|---|
+| 작업 카드 | Issue | 할 일 하나를 적어 두는 곳 |
+| 작업판 | Project | 팀의 모든 작업과 진행 상태를 보는 곳 |
+| 작업 가지 | branch | 내 변경을 `main`과 나누어 작업하는 공간 |
+| 검토 요청 | Pull Request, PR | 변경 내용을 팀원에게 보여 주고 확인받는 곳 |
+| 합치기 | merge | 검토가 끝난 변경을 `main`에 넣는 것 |
+| 검토자 | reviewer | 내 변경을 확인하는 팀원 |
+
+GitHub 화면과 명령어에서 사용하는 이름은 영어로 적었습니다. 그 밖의 설명은 가능한 한 쉬운 한국어로 적었습니다.
+
+## 1. 작업 카드 만들기
+
+새 일을 시작할 때는 먼저 [작업 카드 만들기](https://github.com/TUSI-KHU/2027-avionics/issues/new/choose)를 누릅니다. 이미 작업판에 초안 카드가 있다면 새로 만들지 말고 그 카드를 Issue로 바꿉니다.
+
+양식에서 다음 내용을 채웁니다.
+
+- 무엇을 하려는지
+- 언제 끝났다고 볼 수 있는지
+- 어떻게 확인할지
+- 먼저 끝나야 하는 일이나 막힌 점이 있는지
+
+### 작성 예시
+
+```text
+제목: [G0][SYS] 사용 중인 센서 목록 정리
+
+목적:
+현재 후보 센서와 담당자를 한곳에서 확인할 수 있게 정리한다.
+
+완료 조건:
+- [ ] 센서 이름과 부품 번호를 적었다.
+- [ ] 담당자를 적었다.
+- [ ] 아직 정하지 못한 항목을 따로 표시했다.
+
+확인 방법:
+담당자 한 명이 표의 누락 여부를 확인한다.
+
+의존성, 제약과 관련 번호:
+없음
+```
+
+영어로 표시되는 선택값은 작업판과 자동으로 맞추기 위해 그대로 사용합니다.
+
+- `Priority`: `P0`은 꼭 해야 하는 일, `P1`은 목표로 하는 일, `P2`는 필요하면 줄일 수 있는 일
+- `Gate`: 현재 개발 단계
+- `Subsystem`: 담당 분야
+- `유형`: 작업의 종류
+
+담당자 한 명, 완료 조건, 확인 방법이 정해지면 상태를 `Backlog`에서 `In Progress`로 옮깁니다. 한 사람이 동시에 맡는 주요 `In Progress` 작업은 하나만 둡니다.
+
+## 2. 작업 가지 만들기
+
+터미널에서 아래 명령을 실행합니다. `12`는 작업 카드 번호로 바꿉니다.
 
 ```bash
 git switch main
 git pull --ff-only
-git switch -c docs/12-update-interface-contract
+git switch -c docs/12-sensor-list
 ```
 
-## 3. 검증과 Pull Request
+작업 가지 이름은 다음 형식을 권장합니다.
 
-1. PR 전에 `make validate PYTHON=.venv/bin/python`을 실행한다.
-2. PR 본문에 `Refs #<issue>`를 넣어 원 Task와 연결하되 merge만으로 Issue를 자동 종료하지 않는다.
-3. 영향분석, 검증 결과, evidence와 미검증 항목을 사실대로 기록한다.
-4. 검토 가능한 상태가 되면 Project Status를 `Review`로 옮긴다.
-5. 같은 Task의 PR을 Project card로 별도 추가하지 않는다.
+```text
+종류/작업번호-짧은-설명
+```
 
-일반 변경은 구현자와 다른 reviewer 1명이 승인한다. 비행 중요 변경은 Technical Lead와 독립 reviewer를 포함해 최소 2명이 검토한다. 실제 계정 또는 team이 확정되기 전에는 CODEOWNERS를 사용하지 않는다.
+자주 쓰는 종류는 다음과 같습니다.
 
-## 4. Merge와 종료
+- `feat`: 새 기능
+- `fix`: 잘못된 동작 수정
+- `docs`: 문서 변경
+- `test`: 시험 또는 검사 추가
+- `chore`: 설정이나 정리 작업
 
-- merge 방식은 squash만 사용한다.
-- review conversation을 모두 해결하고 CI를 통과한 뒤 merge한다.
-- merge 후 Issue의 검증 조건까지 확인한 다음 Issue를 수동으로 닫는다. 활성화된 `Item closed` workflow가 Status를 `Done`으로 바꾼다.
-- 취소할 때는 근거와 영향을 남기고 Issue를 닫은 뒤, 자동 `Done` 전이가 끝나면 Status를 `Canceled`로 명시적으로 바꾼다.
-- 막힌 Task는 현재 Status를 유지하고 원인, 해제 조건과 다음 action을 기록한다.
+## 3. 변경 저장하기
 
-## 5. Evidence와 보안
+한 번에 너무 많은 내용을 묶지 않습니다. 무엇을 바꿨는지 한 문장으로 알 수 있게 저장합니다.
 
-- P0, 안전, subsystem interface 변경은 관련 requirement/interface/hazard ID를 남긴다.
-- 시험 evidence에는 가능한 경우 HW revision/serial, source commit, configuration/calibration과 URI/hash를 포함한다.
-- secret, credential, private data, 대형 raw data와 생성 binary는 Git에 commit하지 않는다.
+```bash
+git add 바꾼-파일
+git commit -m "docs: 센서 목록 작성 방법 추가"
+```
+
+잘못된 예:
+
+```text
+수정함
+여러 가지 변경
+최종
+```
+
+## 4. 올리기 전에 확인하기
+
+처음 한 번만 검사 환경을 만듭니다.
+
+```bash
+uv venv .venv
+uv pip install --python .venv/bin/python --require-hashes -r requirements-dev.txt
+```
+
+변경을 올리기 전에는 아래 명령을 실행합니다.
+
+```bash
+make validate PYTHON=.venv/bin/python
+```
+
+실패하면 출력된 `ERROR`부터 고칩니다. 해결하기 어렵다면 작업 카드에 오류 내용을 그대로 붙여 넣고 도움을 요청합니다.
+
+## 5. 검토 요청 올리기
+
+작업 가지를 GitHub에 올립니다.
+
+```bash
+git push -u origin HEAD
+```
+
+GitHub에서 검토 요청을 만들면 양식이 자동으로 나옵니다. `Refs #12`처럼 작업 카드 번호를 연결합니다.
+
+`Closes #12`는 쓰지 않습니다. 검토 요청을 합친 뒤에도 실제 확인이 남아 있을 수 있기 때문입니다.
+
+### 짧은 작성 예시
+
+```text
+왜 바꾸나요?
+센서 목록 작성 방식이 사람마다 달라서 한 가지 양식으로 맞춥니다.
+
+Refs #12
+
+무엇을 바꿨나요?
+- 센서 목록 표 추가
+- 작성 예시 추가
+
+어떻게 확인했나요?
+make validate PYTHON=.venv/bin/python
+결과: 통과
+
+아직 확인하지 못한 것과 다음 할 일
+없음
+```
+
+검토할 수 있는 상태가 되면 작업 카드의 상태를 `Review`로 옮깁니다. 검토 요청을 작업판에 새 카드로 추가하지는 않습니다.
+
+## 6. 검토받기
+
+일반 변경은 작업한 사람과 다른 팀원 한 명이 확인합니다. 비행에 직접 영향을 주는 변경은 기술 책임자와 독립된 검토자를 포함해 두 명 이상이 확인합니다.
+
+검토자는 다음을 봅니다.
+
+- 작업 카드의 완료 조건을 만족했는가
+- 확인 방법과 결과가 적혀 있는가
+- 다른 부품이나 문서에 미치는 영향이 빠지지 않았는가
+- 실패하거나 아직 확인하지 못한 내용을 숨기지 않았는가
+
+검토 의견을 반영한 뒤 모든 대화를 해결하고 자동 검사가 통과하면 `squash merge`로 합칩니다.
+
+## 7. 작업 끝내기
+
+검토 요청을 합친 것만으로 작업이 끝난 것은 아닙니다.
+
+1. 작업 카드의 완료 조건을 다시 확인합니다.
+2. 시험이나 문서 확인이 끝났는지 확인합니다.
+3. 작업 카드를 직접 닫습니다.
+4. 작업판이 자동으로 상태를 `Done`으로 바꿉니다.
+
+취소할 때는 아래 양식을 작업 카드에 남깁니다.
+
+```text
+취소 이유:
+
+영향을 받는 항목:
+
+대신 할 일 또는 다시 검토할 조건:
+```
+
+작업 카드를 닫은 뒤 자동 변경이 끝나면 상태를 `Canceled`로 바꿉니다.
+
+## 막혔을 때 남기는 글
+
+```text
+막힌 이유:
+
+지금까지 확인한 것:
+
+다시 진행하려면 필요한 것:
+
+다음에 할 일:
+
+도움이 필요한 사람 또는 분야:
+```
+
+막혔다고 상태를 임의로 `Backlog`로 되돌리지 않습니다. 현재 상태를 유지하고 위 내용을 작업 카드에 적습니다.
+
+## 시험 자료와 보안
+
+`P0`, 안전, 분야 사이 연결부에 관련된 변경은 요구사항·연결부·위험 번호를 남깁니다. 시험 자료에는 해당할 때만 다음 정보를 적습니다.
+
+- 사용한 하드웨어의 판과 일련번호
+- 시험한 소스 코드 버전
+- 설정값과 보정값
+- 결과 파일 위치와 해시
+
+비밀번호, 인증 정보, 개인 정보, 큰 원본 자료와 자동 생성 파일은 저장소에 올리지 않습니다.
