@@ -1,0 +1,87 @@
+name: Task
+description: Project에서 추적할 구현, 변경, 조사, 시험, 위험 또는 anomaly를 등록합니다.
+title: "[Task] "
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issue를 만든 뒤 2027 Avionics Project에 추가하고 실설정의 Priority, 유형, Subsystem, Gate를 지정합니다.
+  - type: textarea
+    id: purpose
+    attributes:
+      label: 목적
+      description: 해결할 문제와 필요한 결과를 설명합니다.
+    validations:
+      required: true
+  - type: dropdown
+    id: type
+    attributes:
+      label: 유형
+      options:
+        - Feature
+        - Change
+        - Defect
+        - Research
+        - Test
+        - Risk
+        - Anomaly
+    validations:
+      required: true
+  - type: dropdown
+    id: subsystem
+    attributes:
+      label: Subsystem
+      options:
+        - SYS
+        - HW
+        - FSW
+        - GNC
+        - RF
+        - GS
+        - TEST
+    validations:
+      required: true
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      options:
+        - P0
+        - P1
+        - P2
+    validations:
+      required: true
+  - type: dropdown
+    id: gate
+    attributes:
+      label: Gate
+      options:
+        - G0
+        - G1
+        - G2
+        - G3
+        - Post-flight
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: 완료 조건
+      description: 검토자가 완료 여부를 객관적으로 판단할 수 있는 조건을 체크리스트로 작성합니다.
+      placeholder: "- [ ] 결과물 또는 동작"
+    validations:
+      required: true
+  - type: textarea
+    id: verification
+    attributes:
+      label: 검증 방법
+      description: 명령, Test ID, 측정 방법과 보관할 evidence를 작성합니다.
+    validations:
+      required: true
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: 의존성, 제약과 관련 ID
+      description: 선행 Task, blocker, interface/requirement/hazard ID가 없으면 없음으로 적습니다.
+    validations:
+      required: true

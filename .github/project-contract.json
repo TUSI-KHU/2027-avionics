@@ -1,0 +1,19 @@
+{
+  "project_url": "https://github.com/orgs/TUSI-KHU/projects/1",
+  "fields": {
+    "Status": ["Backlog", "In Progress", "Review", "Done", "Canceled"],
+    "Priority": ["P0", "P1", "P2"],
+    "유형": ["Feature", "Change", "Defect", "Research", "Test", "Risk", "Anomaly"],
+    "Subsystem": ["SYS", "HW", "FSW", "GNC", "RF", "GS", "TEST"],
+    "Gate": ["G0", "G1", "G2", "G3", "Post-flight"]
+  },
+  "views": [
+    {"name": "Board", "layout": "BOARD_LAYOUT", "filter": "-status:Done,Canceled"},
+    {"name": "All Tasks", "layout": "TABLE_LAYOUT", "filter": ""},
+    {"name": "P0 Progress", "layout": "TABLE_LAYOUT", "filter": "priority:P0 -status:Done,Canceled"},
+    {"name": "My Tasks", "layout": "BOARD_LAYOUT", "filter": "assignee:@me -status:Done,Canceled"},
+    {"name": "My Review", "layout": "TABLE_LAYOUT", "filter": "status:Review"},
+    {"name": "Backlog", "layout": "TABLE_LAYOUT", "filter": ""}
+  ],
+  "workflows": ["Item added to project", "Item closed"]
+}
