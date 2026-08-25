@@ -6,6 +6,8 @@ NURA 발사대회급 400m 로켓의 전자 장비를 개발하는 저장소입�
 
 [처음 참여하는 사람을 위한 작업 방법](CONTRIBUTING.md)을 먼저 읽어 주세요. Issue 작성 예시부터 PR을 merge한 뒤 마무리하는 방법까지 순서대로 적혀 있습니다.
 
+Git 명령이 익숙하지 않다면 [선택 문서: 이 저장소에서 필요한 Git 기초](docs/git-basics.md)를 함께 보면 됩니다.
+
 작업은 아래 순서로 진행합니다.
 
 ```text
@@ -30,5 +32,6 @@ make validate PYTHON=.venv/bin/python
 - [Project](https://github.com/orgs/TUSI-KHU/projects/1)
 - [새 Issue 만들기](https://github.com/TUSI-KHU/2027-avionics/issues/new/choose)
 - [작업 방법과 작성 예시](CONTRIBUTING.md)
+- [선택: 이 저장소에서 필요한 Git 기초](docs/git-basics.md)
 - [관리자용 Project 설정 기록](project-configuration.md)
 - [관리자용 저장소 설정 기록](repository-settings.md)

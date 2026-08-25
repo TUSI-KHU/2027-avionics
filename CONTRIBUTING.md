@@ -6,7 +6,7 @@
 Issue 만들기 → In Progress로 옮기기 → branch 만들기 → PR 올리기 → review 후 merge
 ```
 
-막히면 혼자 오래 붙잡고 있지 말고 Issue에 상황을 적어 주세요.
+막히면 혼자 오래 붙잡고 있지 말고 Issue에 상황을 적어 주세요. Git 명령이 익숙하지 않다면 [선택 문서: 이 저장소에서 필요한 Git 기초](docs/git-basics.md)를 먼저 읽어도 됩니다.
 
 ## GitHub에서 자주 쓰는 용어
 
