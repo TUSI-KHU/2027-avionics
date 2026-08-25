@@ -1,4 +1,4 @@
-# 관리자용: GitHub 작업판의 실제 설정
+# 관리자용: GitHub Project의 실제 설정
 
 Project: [2027 Avionics](https://github.com/orgs/TUSI-KHU/projects/1)
 
