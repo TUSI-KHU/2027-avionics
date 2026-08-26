@@ -22,6 +22,7 @@ REQUIRED_FILES = (
     ".github/ISSUE_TEMPLATE/task.yml",
     ".github/ISSUE_TEMPLATE/config.yml",
     ".github/workflows/repository-contract.yml",
+    ".github/workflows/sync-issue-project.yml",
     "Makefile",
     "requirements-dev.txt",
 )
@@ -238,6 +239,82 @@ def validate_workflow(workflow: Any, errors: list[str]) -> None:
         errors.append("workflow must run the exact repository validation command")
 
 
+def validate_project_sync_workflow(workflow: Any, errors: list[str]) -> None:
+    if not isinstance(workflow, dict):
+        errors.append("project sync workflow must be an object")
+        return
+
+    events = workflow.get("on")
+    issues = events.get("issues") if isinstance(events, dict) else None
+    event_types = issues.get("types") if isinstance(issues, dict) else None
+    required_types = {"opened", "edited", "reopened"}
+    if not isinstance(event_types, list) or not required_types.issubset(event_types):
+        errors.append(
+            "project sync workflow must handle opened, edited, and reopened Issues"
+        )
+
+    permissions = workflow.get("permissions")
+    if not isinstance(permissions, dict) or permissions.get("contents") != "read":
+        errors.append("project sync workflow permissions must include contents: read")
+    if not isinstance(permissions, dict) or permissions.get("issues") != "read":
+        errors.append("project sync workflow permissions must include issues: read")
+
+    jobs = workflow.get("jobs")
+    job = jobs.get("sync") if isinstance(jobs, dict) else None
+    if not isinstance(job, dict):
+        errors.append("project sync workflow must define the sync job")
+        return
+    if job.get("runs-on") != "ubuntu-latest":
+        errors.append("project sync job must run on ubuntu-latest")
+    if "if" in job:
+        errors.append("project sync job must not be conditionally disabled")
+
+    steps = job.get("steps")
+    if not isinstance(steps, list):
+        errors.append("project sync job must define steps")
+        return
+    if any(isinstance(step, dict) and "if" in step for step in steps):
+        errors.append("project sync steps must not be conditionally disabled")
+
+    checkout = [
+        step.get("uses")
+        for step in steps
+        if isinstance(step, dict) and step.get("uses")
+    ]
+    if not any(
+        isinstance(action, str)
+        and ACTION_SHA.fullmatch(action)
+        and action.startswith("actions/checkout@")
+        for action in checkout
+    ):
+        errors.append("project sync workflow must use actions/checkout pinned to a SHA")
+
+    run_step = next(
+        (
+            step
+            for step in steps
+            if isinstance(step, dict)
+            and step.get("run") == "python scripts/sync_issue_to_project.py"
+        ),
+        None,
+    )
+    if run_step is None:
+        errors.append("project sync workflow must run the exact sync command")
+        return
+    environment = run_step.get("env")
+    if (
+        not isinstance(environment, dict)
+        or environment.get("PROJECT_TOKEN") != "${{ secrets.PROJECT_TOKEN }}"
+    ):
+        errors.append(
+            "project sync workflow must read PROJECT_TOKEN from repository secrets"
+        )
+    if not isinstance(environment, dict) or environment.get("PROJECT_OWNER") != "TUSI-KHU":
+        errors.append("project sync workflow must target organization TUSI-KHU")
+    if not isinstance(environment, dict) or environment.get("PROJECT_NUMBER") != "1":
+        errors.append("project sync workflow must target Project 1")
+
+
 def validate_project_document(
     document: str, contract: dict[str, Any], errors: list[str]
 ) -> None:
@@ -295,6 +372,12 @@ def validate(root: Path) -> list[str]:
         workflow = load_yaml(workflow_path, errors)
         if workflow is not None:
             validate_workflow(workflow, errors)
+
+    sync_workflow_path = root / ".github/workflows/sync-issue-project.yml"
+    if sync_workflow_path.is_file():
+        workflow = load_yaml(sync_workflow_path, errors)
+        if workflow is not None:
+            validate_project_sync_workflow(workflow, errors)
 
     document_path = root / "project-configuration.md"
     if document_path.is_file() and contract is not None:

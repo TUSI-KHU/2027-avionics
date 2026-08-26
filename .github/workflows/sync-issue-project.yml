@@ -1,0 +1,33 @@
+name: sync-issue-project
+
+on:
+  issues:
+    types:
+      - opened
+      - edited
+      - reopened
+
+permissions:
+  contents: read
+  issues: read
+
+concurrency:
+  group: sync-issue-project-${{ github.event.issue.node_id }}
+  cancel-in-progress: true
+
+jobs:
+  sync:
+    name: sync-issue-project
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Add Issue and synchronize Project fields
+        run: python scripts/sync_issue_to_project.py
+        env:
+          PROJECT_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          PROJECT_OWNER: TUSI-KHU
+          PROJECT_NUMBER: "1"
