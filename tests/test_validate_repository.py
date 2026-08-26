@@ -96,6 +96,26 @@ jobs:
       - run: make validate PYTHON=python
 """
 
+PROJECT_SYNC_WORKFLOW = """\
+name: sync-issue-project
+on:
+  issues:
+    types: [opened, edited, reopened]
+permissions:
+  contents: read
+  issues: read
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - run: python scripts/sync_issue_to_project.py
+        env:
+          PROJECT_TOKEN: ${{ secrets.PROJECT_TOKEN }}
+          PROJECT_OWNER: TUSI-KHU
+          PROJECT_NUMBER: "1"
+"""
+
 PR_TEMPLATE = """\
 ## 왜 바꾸나요?
 Refs #1
@@ -130,6 +150,7 @@ class RepositoryContractTest(unittest.TestCase):
                 "    about: Project board\n"
             ),
             ".github/workflows/repository-contract.yml": WORKFLOW,
+            ".github/workflows/sync-issue-project.yml": PROJECT_SYNC_WORKFLOW,
             "Makefile": "validate:\n\tpython scripts/validate_repository.py\n",
             "requirements-dev.txt": "pyyaml==6.0.2\n",
         }
@@ -151,6 +172,47 @@ class RepositoryContractTest(unittest.TestCase):
             (root / ".github/ISSUE_TEMPLATE/config.yml").unlink()
             self.assertIn(
                 "missing required file: .github/ISSUE_TEMPLATE/config.yml",
+                validate(root),
+            )
+
+    def test_missing_project_sync_workflow_is_reported(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_contract(root)
+            (root / ".github/workflows/sync-issue-project.yml").unlink()
+            self.assertIn(
+                "missing required file: .github/workflows/sync-issue-project.yml",
+                validate(root),
+            )
+
+    def test_project_sync_workflow_must_run_on_issue_changes(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_contract(root)
+            workflow = root / ".github/workflows/sync-issue-project.yml"
+            workflow.write_text(
+                PROJECT_SYNC_WORKFLOW.replace("opened, edited, reopened", "opened"),
+                encoding="utf-8",
+            )
+            self.assertIn(
+                "project sync workflow must handle opened, edited, and reopened Issues",
+                validate(root),
+            )
+
+    def test_project_sync_workflow_requires_repository_secret(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            self.write_contract(root)
+            workflow = root / ".github/workflows/sync-issue-project.yml"
+            workflow.write_text(
+                PROJECT_SYNC_WORKFLOW.replace(
+                    "PROJECT_TOKEN: ${{ secrets.PROJECT_TOKEN }}",
+                    "PROJECT_TOKEN: token-in-file",
+                ),
+                encoding="utf-8",
+            )
+            self.assertIn(
+                "project sync workflow must read PROJECT_TOKEN from repository secrets",
                 validate(root),
             )
 
