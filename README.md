@@ -3,11 +3,9 @@
 NURA 400m 소형 로켓의 비행 컴퓨터(Flight Computer), 펌웨어, GNC, RF 통신 및 지상국 저장소입니다.
 
 ## 📚 주요 안내
-- [기여 가이드 (CONTRIBUTING.md)](CONTRIBUTING.md): GitHub 기반 협업 규칙 (이슈, 브랜치, PR)
-- [GitHub Project 운영 가이드 (docs/wiki/guidelines/project-workflow.md)](docs/wiki/guidelines/project-workflow.md): 칸반 보드 및 라벨 운영
-- [지식 베이스 홈 (docs/Index.md)](docs/Index.md): Obsidian 및 Karpathy LLM Wiki 중심 대시보드(MOC)
-- [문서 공간 안내 (docs/README.md)](docs/README.md): 2계층 지식 구조(Raw Stream vs Living Wiki) 안내
-- [시스템 종합 설계서 (docs/system-design.md)](docs/system-design.md): 미션 목표, 비행 모드(FSM), 아키텍처 요약
+- [협업 및 기여 가이드 (CONTRIBUTING.md)](CONTRIBUTING.md): **(필독)** 팀 작업 사이클, 칸반 보드 및 Antigravity 자연어 협업 방법
+- [시스템 종합 설계서 (docs/system-design.md)](docs/system-design.md): 400m 미션 목표, 비행 모드(FSM), 핵심 아키텍처 요약
+- [지식 베이스 대시보드 (docs/Index.md)](docs/Index.md): 서브시스템 엔티티, 인터페이스(핀맵/패킷), ADR 및 검증 매트릭스 전체 맵 (Obsidian MOC)
 
 ---
 

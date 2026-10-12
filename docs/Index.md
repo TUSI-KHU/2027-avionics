@@ -39,7 +39,6 @@ graph TD
     Wiki --> Decisions["[[docs/wiki/decisions/README|의사결정 기록 (decisions)]]"]
     Wiki --> Verification["[[docs/wiki/verification/README|시험 및 검증 (verification)]]"]
     Wiki --> Reports["[[docs/wiki/reports/README|보고서 (reports)]]"]
-    Wiki --> Guidelines["[[docs/wiki/guidelines/project-workflow|협업 가이드 (guidelines)]]"]
     
     Systems --> FSM["[[docs/wiki/systems/flight-state-machine|비행 상태 머신 (FSM)]]"]
     Systems --> FC["[[docs/wiki/systems/flight-computer|비행 컴퓨터 (HW)]]"]
@@ -81,9 +80,10 @@ graph TD
 ### 5. 공식 보고서 (`docs/wiki/reports/`)
 - [[docs/wiki/reports/README|프로젝트 보고서 공간]]
 
-### 6. 협업 및 운영 가이드 (`docs/wiki/guidelines/`)
-- [[docs/wiki/guidelines/project-workflow|GitHub Projects 칸반 및 협업 가이드]]: 보드 컬럼, 라벨 체계, PR 라이프사이클
-- [[docs/wiki/guidelines/repository-settings|GitHub 저장소 및 브랜치 보호 설정]]: main 브랜치 보호 및 머지 정책
+---
+
+## 🤝 팀 협업 및 기여 가이드
+- [[CONTRIBUTING|NURA 팀 협업 및 기여 가이드 (CONTRIBUTING.md)]]: Antigravity 프롬프트, 칸반 보드, 3단계 작업 사이클, 브랜치 보호 정책 단일 가이드
 
 ---
 
