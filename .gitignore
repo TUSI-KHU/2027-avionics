@@ -1,3 +1,71 @@
+# OS and editors
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+.idea/
+
+# PlatformIO build artifacts
+.pio/
+.pioenvs/
+.piolibdeps/
+compile_commands.json
+
+# Python and local tools
+.venv/
 __pycache__/
 *.py[cod]
-.venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+
+# Obsidian per-user state and caches
+.obsidian/workspace.json
+.obsidian/workspaces.json
+.obsidian/cache/
+.trash/
+
+# Build and generated dependency trees
+build/
+dist/
+out/
+node_modules/
+vendor/
+
+# Hardware manufacturing and temporary EDA output
+*.bak
+*.bck
+*.kicad_prl
+*.kicad_sch-bak
+*.kicad_pcb-bak
+*-backups/
+gerbers/
+manufacturing-output/
+
+# Large or sensitive evidence belongs in the external archive
+raw-data/
+flight-data/
+*.bin
+*.elf
+*.hex
+*.map
+*.pcap
+*.logicdata
+*.wfm
+*.mp4
+*.mov
+
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx

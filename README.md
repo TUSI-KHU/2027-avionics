@@ -1,37 +1,29 @@
-# 2027 Avionics
+# 2027 NURA Avionics
 
-NURA 발사대회급 400m 로켓의 전자 장비를 개발하는 저장소입니다.
+NURA 400m 소형 로켓의 비행 컴퓨터(Flight Computer), 펌웨어, GNC, RF 통신 및 지상국 저장소입니다.
 
-## 처음 참여한다면
+## 📚 주요 안내
+- [기여 가이드 (CONTRIBUTING.md)](CONTRIBUTING.md): GitHub 기반 협업 규칙 (이슈, 브랜치, PR)
+- [GitHub Project 운영 가이드 (docs/wiki/guidelines/project-workflow.md)](docs/wiki/guidelines/project-workflow.md): 칸반 보드 및 라벨 운영
+- [지식 베이스 홈 (docs/Index.md)](docs/Index.md): Obsidian 및 Karpathy LLM Wiki 중심 대시보드(MOC)
+- [문서 공간 안내 (docs/README.md)](docs/README.md): 2계층 지식 구조(Raw Stream vs Living Wiki) 안내
+- [시스템 종합 설계서 (docs/system-design.md)](docs/system-design.md): 미션 목표, 비행 모드(FSM), 아키텍처 요약
 
-[처음 참여하는 사람을 위한 작업 방법](CONTRIBUTING.md)을 먼저 읽어 주세요. Issue 작성 예시부터 PR을 merge한 뒤 마무리하는 방법까지 순서대로 적혀 있습니다.
+---
 
-Git 명령이 익숙하지 않다면 [선택 문서: 이 저장소에서 필요한 Git 기초](docs/git-basics.md)를 함께 보면 됩니다.
+## 🗂️ 저장소 구조
 
-작업은 아래 순서로 진행합니다.
+| 경로 | 책임 범위 |
+|---|---|
+| `firmware/` | 온보드 비행 컴퓨터 펌웨어 (PlatformIO 표준 프로젝트: `platformio.ini`, `src/`, `include/`, `lib/`, `test/`) |
+| `docs/` | 시스템 종합 설계, 의사결정(ADR), 인터페이스, 시험/검증, 보고서 등 전체 문서 |
+| `hardware/` | KiCad 회로도, PCB 아트워크, 심볼/풋프린트 라이브러리 |
+| `ground-station/` | 지상국 수신, 명령 전송 및 실시간 모니터링 소프트웨어 |
+| `simulation/` | 비행 동역학 시뮬레이션 모델, 환경 시나리오 및 파라미터 |
+| `configs/` | 비행 형상 설정 파일(`{id}-{yymmdd}.yaml`) 및 센서 캘리브레이션 데이터(`configs/calibration/`) |
 
-```text
-Issue 만들기 → In Progress로 옮기기 → branch 만들기 → PR 올리기 → review 후 merge
-```
+---
 
-## 처음 한 번만 준비하기
+## License
 
-```bash
-uv venv .venv
-uv pip install --python .venv/bin/python --require-hashes -r requirements-dev.txt
-```
-
-변경을 올리기 전에는 다음 검사를 실행합니다.
-
-```bash
-make validate PYTHON=.venv/bin/python
-```
-
-## 바로가기
-
-- [Project](https://github.com/orgs/TUSI-KHU/projects/1)
-- [새 Issue 만들기](https://github.com/TUSI-KHU/2027-avionics/issues/new/choose)
-- [작업 방법과 작성 예시](CONTRIBUTING.md)
-- [선택: 이 저장소에서 필요한 Git 기초](docs/git-basics.md)
-- [관리자용 Project 설정 기록](project-configuration.md)
-- [관리자용 저장소 설정 기록](repository-settings.md)
+[MIT](LICENSE)

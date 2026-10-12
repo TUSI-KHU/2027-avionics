@@ -1,0 +1,33 @@
+{
+  // ─── PlatformIO & 툴체인 터미널 환경 ───
+  "terminal.integrated.env.linux": {
+    "PATH": "${env:HOME}/.platformio/penv/bin:${env:PATH}"
+  },
+  "platformio-ide.autoRebuildAutocompleteCache": true,
+  "platformio-ide.activateProjectOnTextEditorChange": true,
+
+  // ─── C/C++ & Clangd 인텔리센스 ───
+  "clangd.arguments": [
+    "--compile-commands-dir=firmware/.pio/build/esp32s3_flight_computer",
+    "--background-index",
+    "--clang-tidy",
+    "--header-insertion=iwyu"
+  ],
+
+  // ─── Markdown All in One 설정 ───
+  "markdown.extension.toc.slugifyMode": "github",
+  "markdown.extension.toc.orderedList": false,
+  "markdown.extension.table.formatter.enabled": true,
+  "markdown.extension.completion.enabled": true,
+
+  // ─── 마크다운 편집 및 자동완성 ───
+  "[markdown]": {
+    "editor.quickSuggestions": {
+      "other": "on",
+      "comments": "off",
+      "strings": "off"
+    },
+    "editor.wordWrap": "on"
+  },
+  "cmake.sourceDirectory": "/home/changsu/Workspace/2027-nura-avionics/firmware"
+}

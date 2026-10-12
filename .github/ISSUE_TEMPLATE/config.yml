@@ -1,5 +1,2 @@
-blank_issues_enabled: false
-contact_links:
-  - name: 2027 Avionics Project
-    url: https://github.com/orgs/TUSI-KHU/projects/1
-    about: Task 상태와 우선순위를 확인합니다.
+blank_issues_enabled: true
+contact_links: []

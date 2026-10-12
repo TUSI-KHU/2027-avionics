@@ -1,98 +1,36 @@
-name: Issue 등록
-description: 새 기능, 변경, 조사, 시험, 위험 또는 예상하지 못한 문제를 등록합니다.
-title: "[작업] "
+name: 작업 / 기능 개발 (Task)
+description: 새 기능 개발, 회로 설계, 펌웨어 작성 또는 문서 작업을 등록합니다.
+title: "[Task] "
+labels: ["task"]
 body:
-  - type: markdown
-    attributes:
-      value: |
-        어려운 말로 길게 쓸 필요는 없습니다. 다른 팀원이 "무엇을 해야 하고, 언제 끝나는지" 알 수 있게 적어 주세요.
-
-        영어 선택값은 Project와 자동으로 맞추기 위해 그대로 사용합니다.
-  - type: textarea
-    id: purpose
-    attributes:
-      label: 무엇을 하려나요?
-      description: 해결하려는 문제와 필요한 결과를 한두 문장으로 적어 주세요.
-      placeholder: 예) 현재 후보 센서와 담당자를 한곳에서 확인할 수 있게 정리한다.
-    validations:
-      required: true
   - type: dropdown
-    id: type
-    attributes:
-      label: 작업 종류
-      description: Feature=새 기능, Change=변경, Defect=잘못된 동작, Research=조사, Test=시험, Risk=위험, Anomaly=예상하지 못한 현상
-      options:
-        - Feature
-        - Change
-        - Defect
-        - Research
-        - Test
-        - Risk
-        - Anomaly
-    validations:
-      required: true
-  - type: dropdown
-    id: subsystem
+    id: part
     attributes:
       label: 담당 분야
-      description: SYS=시스템, HW=하드웨어, FSW=비행 소프트웨어, GNC=유도·항법·제어, RF=무선, GS=지상국, TEST=시험
       options:
-        - SYS
-        - HW
-        - FSW
-        - GNC
-        - RF
-        - GS
-        - TEST
-    validations:
-      required: true
-  - type: dropdown
-    id: priority
-    attributes:
-      label: 중요도
-      description: P0=꼭 해야 함, P1=목표로 함, P2=필요하면 줄일 수 있음
-      options:
-        - P0
-        - P1
-        - P2
-    validations:
-      required: true
-  - type: dropdown
-    id: gate
-    attributes:
-      label: 개발 단계
-      description: 현재 작업이 속한 단계를 고릅니다. 잘 모르겠다면 담당자와 확인해 주세요.
-      options:
-        - G0
-        - G1
-        - G2
-        - G3
-        - Post-flight
+        - HW (하드웨어/회로)
+        - FW (펌웨어/소프트웨어)
+        - GNC (제어/알고리즘)
+        - GS (지상국/통신)
+        - DOC (문서/시스템)
     validations:
       required: true
   - type: textarea
-    id: acceptance
+    id: description
     attributes:
-      label: 언제 끝났다고 볼 수 있나요?
-      description: 누가 보더라도 완료 여부를 판단할 수 있도록 체크 목록으로 적어 주세요.
-      placeholder: |
-        - [ ] 센서 이름과 부품 번호를 적었다.
-        - [ ] 담당자가 누락 여부를 확인했다.
+      label: 작업 내용
+      description: 무엇을 왜 개발하거나 변경하는지 간단히 적어주세요.
+      placeholder: "예: STM32F405 기반 SPI 플래시 메모리 드라이버 작성 및 동작 검증"
     validations:
       required: true
   - type: textarea
-    id: verification
+    id: todo
     attributes:
-      label: 어떻게 확인할 건가요?
-      description: 실행할 명령, 시험 방법, 확인할 문서와 남길 결과를 적어 주세요.
-      placeholder: 예) 담당자 한 명이 표를 확인하고 make validate를 실행한다.
+      label: 해야 할 일 (TODO)
+      description: 완료해야 할 세부 작업 목록입니다.
+      value: |
+        - [ ] 
+        - [ ] 
+        - [ ] 동작 확인 및 테스트
     validations:
-      required: true
-  - type: textarea
-    id: dependencies
-    attributes:
-      label: 먼저 필요한 일이나 막힌 점이 있나요?
-      description: 선행 작업, 제약, 관련 요구사항·연결부·위험 번호를 적습니다. 없으면 "없음"이라고 적어 주세요.
-      placeholder: 없음
-    validations:
-      required: true
+      required: false

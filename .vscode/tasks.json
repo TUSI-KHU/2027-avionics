@@ -1,0 +1,49 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "shell",
+      "command": "pio run -d firmware -e esp32s3_flight_computer",
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "label": "PlatformIO: Build (firmware)",
+      "detail": "Compile ESP-IDF FreeRTOS firmware in firmware/"
+    },
+    {
+      "type": "shell",
+      "command": "pio run -d firmware -e esp32s3_flight_computer -t upload",
+      "problemMatcher": ["$gcc"],
+      "group": "build",
+      "label": "PlatformIO: Upload (firmware)",
+      "detail": "Flash firmware to ESP32-S3 board"
+    },
+    {
+      "type": "shell",
+      "command": "pio device monitor -d firmware",
+      "problemMatcher": [],
+      "label": "PlatformIO: Monitor",
+      "detail": "Open serial monitor at 115200 baud"
+    },
+    {
+      "type": "shell",
+      "command": "pio test -d firmware -e native_test",
+      "problemMatcher": ["$gcc"],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "label": "PlatformIO: Test (native)",
+      "detail": "Run unit tests in firmware/test"
+    },
+    {
+      "type": "shell",
+      "command": "pio run -d firmware -t clean",
+      "problemMatcher": ["$gcc"],
+      "label": "PlatformIO: Clean",
+      "detail": "Clean firmware build artifacts"
+    }
+  ]
+}

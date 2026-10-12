@@ -1,0 +1,19 @@
+{
+  "folders": [
+    {
+      "name": "🚀 NURA Avionics (Root)",
+      "path": "."
+    },
+    {
+      "name": "⚡ Firmware (ESP32-S3 PlatformIO)",
+      "path": "firmware"
+    }
+  ],
+  "settings": {
+    "terminal.integrated.env.linux": {
+      "PATH": "${env:HOME}/.platformio/penv/bin:${env:PATH}"
+    },
+    "platformio-ide.autoRebuildAutocompleteCache": true,
+    "platformio-ide.activateProjectOnTextEditorChange": true
+  }
+}
